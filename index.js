@@ -1,7 +1,22 @@
 import express from 'express';
 import cors from 'cors';
 import router from './routes/user-route.js';
+import mongoose from 'mongoose';
+import * as dotenv from 'dotenv';
 
+dotenv.config();
+
+// Set up database
+const mongoString = process.env.ATLAS_URI;
+
+mongoose.connect(mongoString);
+const database = mongoose.connection;
+
+database.on('error', (error) => {
+  console.log(console.error(error));
+});
+
+// Set up app
 const app = express()
 
 app.use(cors());

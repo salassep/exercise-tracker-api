@@ -1,10 +1,15 @@
-import db from "../config/db.js";
+import User from "../models/user-model.js";
 
 export const createUser = async (username) => {
-  const collection = db.collection("users");
-  const result = await collection.insertOne({
+  const newUser = new User({
     username,
   });
 
-  return result;
+  try {
+    const response = await newUser.save();
+    return response;
+  } catch (error) {
+    return false;
+  }
+
 };
