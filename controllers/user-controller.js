@@ -39,7 +39,7 @@ export const createUserExercise = async (req, res) => {
 
   res.json({
     success: true,
-    _id: exercise.userId,
+    _id: user._id,
     username: user.username,
     description: exercise.description,
     duration: exercise.duration,
