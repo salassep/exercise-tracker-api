@@ -1,4 +1,5 @@
 import * as userService from '../services/user-service.js';
+import moment from 'moment/moment.js';
 
 export const createUser = async (req, res) => {
   const username = req.body.username;
@@ -20,6 +21,12 @@ export const createUser = async (req, res) => {
 export const createUserExercise = async (req, res) => {
   const { _id } = req.params;
   const { description, duration, date } = req.body;
+
+  if (date && !moment(date, "YYYY-MM-DD", true).isValid()) {
+    return res.status(400).json({
+      success: false,
+    });
+  }
 
   const user = await userService.findUserById(_id);
 
@@ -43,10 +50,20 @@ export const createUserExercise = async (req, res) => {
     username: user.username,
     description: exercise.description,
     duration: exercise.duration,
-    date: exercise.date,
+    date: moment(exercise.date).format('ddd MMM D YYYY'),
   });
 };
 
-export const getUserExerciseLogs = (req, res) => {
-  console.log("hello create user exercise logs");
+export const getUserExerciseLogs = async (req, res) => {
+  const { _id } = req.params;
+
+  const user = await userService.findUserById(_id);
+
+  if (!user) {
+    return res.status(404).json({
+      success: false
+    });
+  }
+
+
 };
