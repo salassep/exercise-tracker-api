@@ -30,6 +30,12 @@ export const findUserById = async (id) => {
 
 }
 
+export const getAllUsers = async () => {
+  const users = await User.find()
+    .select("username");
+  return users;
+}
+
 export const createUserExercise = async (data) => {
   const newExercise = new Exercise({
     userId: data._id,

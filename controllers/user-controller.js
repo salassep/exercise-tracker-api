@@ -54,6 +54,11 @@ export const createUserExercise = async (req, res) => {
   });
 };
 
+export const getAllUsers = async (req, res) => {
+  const users = await userService.getAllUsers();
+  res.send(users);
+}
+
 export const getUserExerciseLogs = async (req, res) => {
   const { _id } = req.params;
   const { from, to, limit } = req.query;
