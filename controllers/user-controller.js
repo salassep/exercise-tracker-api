@@ -56,6 +56,7 @@ export const createUserExercise = async (req, res) => {
 
 export const getUserExerciseLogs = async (req, res) => {
   const { _id } = req.params;
+  const { from, to, limit } = req.query;
 
   const user = await userService.findUserById(_id);
 
@@ -65,5 +66,26 @@ export const getUserExerciseLogs = async (req, res) => {
     });
   }
 
+  const exercises = await userService.getUserExerciseLogs({_id, from, to, limit});
 
+  if(!exercises) {
+    return res.status(400).json({
+      success: false
+    });
+  }
+
+  const formattedExercises = exercises.map(exercise => {
+    return {
+      description: exercise.description,
+      duration: exercise.duration,
+      date: moment(exercise.date).format('ddd MMM D YYYY'), 
+    }
+  });
+
+  res.json({
+    username: user.username,
+    count: exercises.length,
+    _id: user._id,
+    logs: formattedExercises,
+  });
 };
