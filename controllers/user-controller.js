@@ -36,14 +36,14 @@ export const createUserExercise = async (req, res) => {
     });
   }
 
-  const exercise = await userService.createUserExercise({ _id, description, duration, date});
+  const exercise = await userService.createUserExercise({ _id, description, duration, date });
 
   if (!exercise) {
     return res.status(400).json({
       success: false,
     });
   }
-  
+
   res.json({
     _id,
     username: user.username,
@@ -70,9 +70,9 @@ export const getUserExerciseLogs = async (req, res) => {
     });
   }
 
-  const exercises = await userService.getUserExerciseLogs({_id, from, to, limit});
+  const exercises = await userService.getUserExerciseLogs({ _id, from, to, limit });
 
-  if(!exercises) {
+  if (!exercises) {
     return res.status(400).json({
       success: false
     });
@@ -82,14 +82,14 @@ export const getUserExerciseLogs = async (req, res) => {
     return {
       description: exercise.description,
       duration: exercise.duration,
-      date: moment(exercise.date).format('ddd MMM D YYYY'), 
+      date: moment(exercise.date).format('ddd MMM DD YYYY'),
     }
   });
 
   res.json({
+    _id,
     username: user.username,
     count: exercises.length,
-    _id: user._id,
-    logs: formattedExercises,
+    log: formattedExercises,
   });
 };

@@ -55,17 +55,17 @@ export const createUserExercise = async (data) => {
 
 export const getUserExerciseLogs = async(data) => {
   try {
-    const exercises = await Exercise.find({
-      userId: data._id,
-      date: {
-        $gte: new Date(data.from),
-        $lt: new Date(data.to),
-      },
-    }).select("description duration date -_id")
-      .limit(data.limit);
+    let query = Exercise.find({userId: data._id });
+
+    if (data.from && data.to) {
+      query = query.where('date').gte(new Date(data.from)).lt(new Date(data.to))
+    }
+    
+    const exercises = await query.select("description duration date -_id").limit(data.limit);
   
     return exercises;
   } catch (error) {
+    console.log(error);
     return false;
   }
 };
