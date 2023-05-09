@@ -3,6 +3,12 @@ import cors from 'cors';
 import router from './routes/user-route.js';
 import mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+import path from 'path';
+
+// Fix __dirname error because it is not supported in es module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config();
 

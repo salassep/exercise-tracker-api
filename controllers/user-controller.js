@@ -43,14 +43,13 @@ export const createUserExercise = async (req, res) => {
       success: false,
     });
   }
-
+  
   res.json({
-    success: true,
-    _id: user._id,
+    _id,
     username: user.username,
-    description: exercise.description,
+    description: description,
     duration: exercise.duration,
-    date: moment(exercise.date).format('ddd MMM D YYYY'),
+    date: moment(exercise.date).format('ddd MMM DD YYYY'),
   });
 };
 
